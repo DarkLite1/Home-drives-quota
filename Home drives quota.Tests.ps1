@@ -241,7 +241,7 @@ Context 'ThresholdFile' {
     } 
     It 'invalid JSON data in ThresholdFile' {
         $testNewParams = Copy-ObjectHC $testParams
-        $testNewParams.ThresholdFile = './testThresholdCorrupt.json'
+        $testNewParams.ThresholdFile = 'TestDrive:\testThresholdCorrupt.json'
         'Incorrect data' | Out-File $testNewParams.ThresholdFile -Force
         .$testScript @testNewParams
 
