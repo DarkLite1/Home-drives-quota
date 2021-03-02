@@ -3,7 +3,7 @@
 
 BeforeAll {
     Import-Module ActiveDirectory -Verbose:$false -Force
-    $ScriptAdmin = 'Brecht.Gijbels@heidelbergcement.com'
+    $ScriptAdmin = 'bob@contoso.com'
 
     $testADgroupNamePrefix = 'Group H drive quota'
     $testThresholdData = @(
@@ -11,7 +11,7 @@ BeforeAll {
             Percentage = 85
             Color      = 'Red'
             Action     = @{
-                MailTo           = 'Brecht.Goijbels@heidelbergcement.com'
+                MailTo           = 'bob@contoso.com'
                 Subject          = "Your personal home drive has reached [Quota Threshold]% of its maximum allowed volume"
                 Body             = @"
 Dear [Source Io Owner],
@@ -20,7 +20,7 @@ Your personal home drive has reached [Quota Threshold]% of its maximum allowed v
 
 The quota limit is [Quota Limit MB] MB, and [Quota Used MB] MB currently is in use ([Quota Used Percent]% of limit). Please take into account that once your quota has been reached, you will no longer be able to edit or save files on your home drive.
 
-In case you need assistance in handling this issue, we kindly ask you to contact us on bnl.servicedesk@heidelbergcement.com
+In case you need assistance in handling this issue, we kindly ask you to contact us on serviceDesk@contoso.com
 
 Kind regards,
 IT Service Desk
@@ -33,7 +33,7 @@ IT Service Desk
             Percentage = 100
             Color      = 'Green'
             Action     = @{
-                MailTo           = 'Brecht.Goijbels@heidelbergcement.com'
+                MailTo           = 'bob@contoso.com'
                 Subject          = 'Your personal home drive has reached or exceeded its maximum allowed volume'
                 Body             = @"
 Dear [Source Io Owner],
@@ -41,7 +41,7 @@ Dear [Source Io Owner],
 Your personal home drive has now reached [Quota Threshold]% of its maximum allowed volume.
 Please take into account that you will no longer be able to edit or save files on your home drive. You can either take the necessary measures to free up space on your home drive, or submit a formal request for a higher volume limit.
 
-In case you need assistance in handling this issue, we kindly ask you to contact us on bnl.servicedesk@heidelbergcement.com
+In case you need assistance in handling this issue, we kindly ask you to contact us on serviceDesk@contoso.com
 
 Kind regards,
 IT Service Desk

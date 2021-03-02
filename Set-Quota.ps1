@@ -11,15 +11,15 @@
     no changes will be done on that folder. Every action is logged in the 'Status' and 'Field' properties.
 
     Output:
-        WARNING: 'E:\HOME\gijbelsb' Changed 'AddWarning60'
-        WARNING: 'E:\HOME\gijbelsb' Changed 'Description'
+        WARNING: 'E:\HOME\cnorris' Changed 'AddWarning60'
+        WARNING: 'E:\HOME\cnorris' Changed 'Description'
 
 
-        SamAccountName        : gijbelsb
+        SamAccountName        : cnorris
         Group                 : BEL ATT Quota home 15GB
-        HomeDirectory         : \\grouphc.net\BNL\HOME\Centralized\gijbelsb
-        ComputerName          : DEUSFFRAN0008
-        Path                  : E:\HOME\gijbelsb
+        HomeDirectory         : \\grouphc.net\BNL\HOME\Centralized\cnorris
+        ComputerName          : SERVER1
+        Path                  : E:\HOME\cnorris
         CurrentSize           : 5916070912
         LimitOld              : 10737418240
         LimitNew              : 10737418240
@@ -32,8 +32,8 @@
         Description           : PowerShell managed quota based on AD membership
         SourceTemplateName    : HOME - 10 GB hard quota - changed to SOFT
         MatchesSourceTemplate : False
-        PSComputerName        : DEUSFFRAN0008.grouphc.net
-        RunspaceId            : 6b6a25a3-f6a6-4bb9-b6e3-b75a23dc26df
+        PSComputerName        : SERVER1.grouphc.net
+        RunSpaceId            : 6b6a25a3-f6a6-4bb9-b6e3-b75a23dc26df
 
     In case the user needs the SourceTemplate restored, and all modifications on the user's folder need to be removed,
     the user should be added in AD to a group ending with 'REMOVE' which is translated in property
@@ -47,33 +47,33 @@
     $User = @(
         [PSCustomObject]@{
             Group          = 'BEL ATT Quota home 15GB'
-            SamAccountName = 'gijbelsb'
-            User           = "Gijbels, Brecht (Braine L’Alleud) BEL"
+            SamAccountName = 'cnorris'
+            User           = "Chuck Norris"
             Limit          = '15GB'
             LimitBytes     = 16106127360
-            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\gijbelsb'
-            ComputerName   = 'DEUSFFRAN0008'
-            ComputerPath   = 'E:\HOME\gijbelsb'
+            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\cnorris'
+            ComputerName   = 'SERVER1'
+            ComputerPath   = 'E:\HOME\cnorris'
         },
         [PSCustomObject]@{
             Group          = 'BEL ATT Quota home 10GB'
-            SamAccountName = 'diverhul'
-            User           = "Verhulst, Drik (Braine L’Alleud) BEL"
+            SamAccountName = 'lswagger'
+            User           = "Bob Lee Swagger"
             Limit          = '10GB'
             LimitBytes     = 10737418240
-            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\diverhul'
-            ComputerName   = 'DEUSFFRAN0008'
-            ComputerPath   = 'E:\HOME\diverhul'
+            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\lswagger'
+            ComputerName   = 'SERVER1'
+            ComputerPath   = 'E:\HOME\lswagger'
         },
         [PSCustomObject]@{
             Group          = 'BEL ATT Quota home REMOVE'
-            SamAccountName = 'lmulders'
-            User           = "Mulders, Laurent (Braine L’Alleud) BEL"
+            SamAccountName = 'jbond'
+            User           = "James Bond"
             Limit          = 'RemoveQuota'
             LimitBytes     = $null
-            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\lmulders'
-            ComputerName   = 'DEUSFFRAN0008'
-            ComputerPath   = 'E:\HOME\lmulders'
+            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\jbond'
+            ComputerName   = 'SERVER1'
+            ComputerPath   = 'E:\HOME\jbond'
         }
     )
 
@@ -81,24 +81,25 @@
     The description that will be added to the quota applied on the user.
 
 .EXAMPLE
-    Set a quota limit of 15GB on path 'E:\HOME\gijbelsb' on remote server 'DEUSFFRAN0008'. When a treshold of 90%
-    or 60% of the quota limit has been reached, send an e-mail to the user by adding two warnings.
+    Set a quota limit of 15GB on path 'E:\HOME\cnorris' on remote server 
+    'SERVER1'. When a threshold of 90% or 60% of the quota limit has been 
+    reached, send an e-mail to the user by adding two warnings.
 
     $User = @(
         [PSCustomObject]@{
             Group          = 'BEL ATT Quota home 15GB'
-            SamAccountName = 'gijbelsb'
-            User           = "Gijbels, Brecht (Braine L’Alleud) BEL"
+            SamAccountName = 'cnorris'
+            User           = "Chuck Norris"
             Limit          = '15GB'
             LimitBytes     = 16106127360
-            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\gijbelsb'
-            ComputerName   = 'DEUSFFRAN0008'
-            ComputerPath   = 'E:\HOME\gijbelsb'
+            HomeDirectory  = '\\grouphc.net\BNL\HOME\Centralized\cnorris'
+            ComputerName   = 'SERVER1'
+            ComputerPath   = 'E:\HOME\cnorris'
         }
     )
 
     $Warning = @(
-        [PSCUstomObject]@{
+        [PSCustomObject]@{
             Threshold        = 90
             Type       = 2 # Mails
             RunLimitInterval = 60 # Minutes
@@ -109,7 +110,7 @@
             "is [Quota Limit MB] MB, and " + ` "[Quota Used MB] MB currently is in use ([Quota " + `
             "Used Percent]% of limit)."
         },
-        [PSCUstomObject]@{
+        [PSCustomObject]@{
             Threshold        = 60
             Type       = 2 # Mails
             RunLimitInterval = 60 # Minutes
@@ -130,14 +131,7 @@
         Session      = $Session
     }
     Invoke-Command @InvokeParams
-
-.NOTES
-	CHANGELOG
-    2018/11/04 Script born
-    2019/04/02 Fixed error 'Value does not fall within the expected range.'
-    2019/11/12 Improved error message when SMTP is not configured
-
-	AUTHOR Brecht.Gijbels@heidelbergcement.com #>
+#>
 
 [CmdLetBinding()]
 Param (
