@@ -508,7 +508,7 @@ End {
                     })
 
                 @($WorkSheet.Names['LimitOld_', 'LimitNew_', 'Usage_'].Style).ForEach( {
-                        $_.NumberFormat.Format = '?\ \K\B'
+                        $_.NumberFormat.Format = '?\ \B'
                     })
 
                 $WorkSheet.Cells.Style.HorizontalAlignment = 'Center'
