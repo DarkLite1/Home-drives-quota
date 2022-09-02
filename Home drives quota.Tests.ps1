@@ -165,62 +165,62 @@ Describe 'send an error mail to tha admin when' {
             (Get-Command $testScript).Parameters[$_].Attributes.Mandatory | Should -BeTrue
         }
     }
-} -Tag test
-Context 'not found' {
-    It 'LogFolder' {
-        $testNewParams = Copy-ObjectHC $testParams
-        $testNewParams.LogFolder = 'NotExisting'
-        .$testScript @testNewParams
-
-        Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
-            (&$MailAdminParams) -and ($Message -like "*Path*not found*")
-        }
-        Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
-            $EntryType -eq 'Error'
-        }
-        Should -Invoke Invoke-Command -Exactly 0
-    } 
-    It 'SetQuotaScriptFile' {
-        $testNewParams = Copy-ObjectHC $testParams
-        $testNewParams.SetQuotaScriptFile = 'NotExisting.ps1'
-        .$testScript @testNewParams
-
-        Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
-            (&$MailAdminParams) -and ($Message -like "*Quota script file*not found*")
-        }
-        Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
-            $EntryType -eq 'Error'
-        }
-        Should -Invoke Invoke-Command -Exactly 0
-    } 
-    It 'ADGroupName' {
-        Mock Get-ADGroup
-
-        .$testScript @testParams
-
-        Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
-            (&$MailAdminParams) -and ($Message -like "*Couldn't find active directory groups starting with*")
-        }
-        Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
-            $EntryType -eq 'Error'
-        }
-        Should -Invoke Invoke-Command -Exactly 0
-    } 
-    It 'ADGroupRemoveName' {
-        Mock Get-ADGroup {
-            $testQuotaGroups[0]
-        }
-
-        .$testScript @testParams
-
-        Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
-            (&$MailAdminParams) -and ($Message -like "*Couldn't find the active directory group*for removing quotas*")
-        }
-        Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
-            $EntryType -eq 'Error'
-        }
-        Should -Invoke Invoke-Command -Exactly 0
-    } 
+    Context 'not found' {
+        It 'LogFolder' {
+            $testNewParams = Copy-ObjectHC $testParams
+            $testNewParams.LogFolder = 'xx:\NotExisting'
+            .$testScript @testNewParams
+    
+            Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
+                (&$MailAdminParams) -and ($Message -like "*Failed creating the log folder 'xx:\NotExisting'*")
+            }
+            Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
+                $EntryType -eq 'Error'
+            }
+            Should -Invoke Invoke-Command -Exactly 0
+        } 
+        It 'SetQuotaScriptFile' {
+            $testNewParams = Copy-ObjectHC $testParams
+            $testNewParams.SetQuotaScriptFile = 'NotExisting.ps1'
+            .$testScript @testNewParams
+    
+            Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
+                (&$MailAdminParams) -and ($Message -like "*Quota script file*not found*")
+            }
+            Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
+                $EntryType -eq 'Error'
+            }
+            Should -Invoke Invoke-Command -Exactly 0
+        } 
+        It 'ADGroupName' {
+            Mock Get-ADGroup
+    
+            .$testScript @testParams
+    
+            Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
+                (&$MailAdminParams) -and ($Message -like "*Couldn't find active directory groups starting with*")
+            }
+            Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
+                $EntryType -eq 'Error'
+            }
+            Should -Invoke Invoke-Command -Exactly 0
+        } 
+        It 'ADGroupRemoveName' {
+            Mock Get-ADGroup {
+                $testQuotaGroups[0]
+            }
+    
+            .$testScript @testParams
+    
+            Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
+                (&$MailAdminParams) -and ($Message -like "*Couldn't find the active directory group*for removing quotas*")
+            }
+            Should -Invoke Write-EventLog -Exactly 1 -ParameterFilter {
+                $EntryType -eq 'Error'
+            }
+            Should -Invoke Invoke-Command -Exactly 0
+        } 
+    }
 }
 Context 'ThresholdFile' {
     AfterAll {
@@ -375,7 +375,6 @@ Context 'ThresholdFile' {
         } 
     }
 }
-
 Describe 'register an error in the Error worksheet when' {
     It 'the same user is member of multiple quota limit groups' {
         $WriteErrorCommand = Get-Command -Name Write-Error
@@ -413,7 +412,6 @@ Describe 'register an error in the Error worksheet when' {
         }
     } 
 }
-
 Context 'when the quota limit groups have no members' {
     BeforeAll {
         Mock Get-ADGroup {
@@ -433,7 +431,6 @@ Context 'when the quota limit groups have no members' {
         Should -Invoke Invoke-Command -Exactly 0 -Scope Context
     } 
 }
-
 Context 'when the quota limit groups have a member' {
     BeforeAll {
         Mock Get-ADGroup {

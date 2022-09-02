@@ -3,8 +3,9 @@
     Set quota limits on folders.
 
 .DESCRIPTION
-    This script is intended to run locally or on remote computers and has all functions within the script file, not
-    in modules. It will add/change/delete quota limits, warnings, ... on folders. Quotas are applied on user level
+    This script is intended to run locally or on remote computers and has all 
+    functions within the script file, not in modules. It will add/change/delete 
+    quota limits, warnings, ... on folders. Quotas are applied on user level
     and are hard coded. so changes in the quota SourceTemplate are ignored.
 
     Only changes will be executed. In case a folder is already compliant with the request, it will simply be ignored,

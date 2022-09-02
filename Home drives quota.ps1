@@ -68,7 +68,7 @@
         Members of this group will have the SourceTemplate of the parent folder 
         re-applied on their home drive.
 
-        This is needed to 'unmanage' users that were previously 'managed' by 
+        This is needed to 'un-manage' users that were previously 'managed' by 
         the script. Users that previously were member of one of the AD quota 
         management groups, have a hard quota size limit set. If the user is 
         removed from one of the latter groups, he will still have the 
@@ -180,8 +180,8 @@ Param (
     [String[]]$MailTo,
     [String]$ThresholdFile,
     [String]$SetQuotaScriptFile = '.\Set-Quota.ps1',
-    [String]$LogFolder = $env:POWERSHELL_LOG_FOLDER,
-    [String]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
+    [String]$LogFolder = "$env:POWERSHELL_LOG_FOLDER\Home drives\Home drives quota\$ScriptName",
+    [String[]]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
 )
 
 Begin {
@@ -198,13 +198,18 @@ Begin {
         Set-Culture 'en-US'
 
         #region Logging
-        $LogParams = @{
-            LogFolder    = New-FolderHC -Path $LogFolder -ChildPath "Home drives\Home drives quota\$ScriptName"
-            Name         = $ScriptName
-            Date         = 'ScriptStartTime'
-            NoFormatting = $true
+        try {
+            $logParams = @{
+                LogFolder    = New-Item -Path $LogFolder -ItemType 'Directory' -Force -ErrorAction 'Stop'
+                Name         = $ScriptName
+                Date         = 'ScriptStartTime'
+                NoFormatting = $true
+            }
+            $logFile = New-LogFileNameHC @LogParams
         }
-        $LogFile = New-LogFileNameHC @LogParams
+        Catch {
+            throw "Failed creating the log folder '$LogFolder': $_"
+        }
         #endregion
 
         #region ThresholdFile
