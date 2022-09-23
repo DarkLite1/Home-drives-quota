@@ -141,7 +141,6 @@ Begin {
         $Error.Clear()
         $LogFile = $null
         Add-Type -Assembly System.Drawing
-        # Import-Module PSWorkflow
 
         Get-ScriptRuntimeHC -Start
         Import-EventLogParamsHC -Source $ScriptName
