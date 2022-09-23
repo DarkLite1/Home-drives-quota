@@ -84,61 +84,13 @@
         This is a JSON file containing information about the e-mail(s) that 
         users will receive when they surpass/breach the threshold percentage on 
         their home drive. Multiple e-mails with different percentages are 
-        supported.
+        supported, see Example.json
 
-        If no JSON file is provided, the quota management server will not send out e-mails to users when they surpass/breach
-        the quota size limit. In case a user will try to add more data to his home drive Windows will simply report that
-        the disk is full and block the action when a hard limit is set.
-
-        Ex.
-        [
-            {
-	        "Percentage":  80,
-	        "Color":  "Pink",
-	        "Action":  {
-		        "MailFrom":  "No-Reply@contoso.com",
-	            "MailTo":  "[Source Io Owner Email]",
-		        "MailCc":  "",
-		        "MailBcc":  "",
-		        "MailReplyTo":  "",
-		        "Subject":  "Your personal home drive has reached [Quota Threshold]% of its maximum allowed volume",
-		        "Body":  "Dear user,\r\n\r\nYour personal home drive has reached [Quota Threshold]% of its maximum allowed volume.\r\n\r\nThe quota limit is [Quota Limit MB] MB, and [Quota Used MB] MB currently is in use ([Quota Used Percent]% of limit). Please take into account that once your quota has been reached, you will no longer be able to edit or save files on your home drive.\r\n\r\nIn case you need assistance in handling this issue, we kindly ask you to call us on xxx or visit http://selfservice \r\n\r\nKind regards,\r\nIT Service Desk",
-	        "RunLimitInterval":  60,
-	        "Type":  2
-	        }
-            },
-            {
-	        "Percentage":  90,
-	        "Color":  "Orange",
-        	    "Action":  {
-		            "MailFrom":  "No-Reply@contoso.com",
-             	    "MailTo":  "[Source Io Owner Email]",
-		            "MailCc":  "",
-		            "MailBcc":  "",
-		            "MailReplyTo":  "",
-		            "Subject":  "Your personal home drive has reached [Quota Threshold]% of its maximum allowed volume",
-                                   "Body":  "Dear user,\r\n\r\nYour personal home drive has reached [Quota Threshold]% of its maximum allowed volume.\r\n\r\nThe quota limit is [Quota Limit MB] MB, and [Quota Used MB] MB currently is in use ([Quota Used Percent]% of limit). Please take into account that once your quota has been reached, you will no longer be able to edit or save files on your home drive.\r\n\r\nIn case you need assistance in handling this issue, we kindly ask you to call us on xxx or visit http://selfservice \r\n\r\nKind regards,\r\nIT Service Desk",
-	        "RunLimitInterval":  60,
-	        "Type":  2
-	        }
-            },
-            {
-	        "Percentage":  100,
-	        "Color":    "Red",
-	        "Action":  {
-		        "MailFrom":  "No-Reply@contoso.com",
-		        "MailTo":  "[Source Io Owner Email]",
-		        "MailCc":  "",
-		        "MailBcc":  "",
-		        "MailReplyTo":  "",
-		        "Subject":  "Your personal home drive has reached or exceeded its maximum allowed volume",
-		        "Body":  "Dear user,\r\n\r\nYour personal home drive has now reached [Quota Threshold]% of its maximum allowed volume.\r\nPlease take into account that you will no longer be able to edit or save files on your home drive. You can either take the necessary measures to free up space on your home drive, or submit a formal request for a higher volume limit.\r\n\r\nIn case you need assistance in handling this issue, we kindly ask you to call us on xxx or visit http://selfservice \r\n\r\nKind regards,\r\nIT Service Desk",
-		        "RunLimitInterval":  60,
-		        "Type":  2
-	            }
-            }
-        ]
-
+        If no JSON file is provided, the quota management server will not send 
+        out e-mails to users when they surpass/breach the quota size limit. In 
+        case a user will try to add more data to his home drive Windows will 
+        simply report that the disk is full and block the action when a hard 
+        limit is set.
 
     .EXAMPLE
         Normal scenario 1
