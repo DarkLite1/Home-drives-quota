@@ -138,14 +138,12 @@ Param (
 
 Begin {
     Try {
-        $Error.Clear()
-        $LogFile = $null
-        Add-Type -Assembly System.Drawing
-
         Get-ScriptRuntimeHC -Start
         Import-EventLogParamsHC -Source $ScriptName
         Write-EventLog @EventStartParams
 
+        $Error.Clear()
+        Add-Type -Assembly System.Drawing
         Set-Culture 'en-US'
 
         #region Logging
