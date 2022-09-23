@@ -249,7 +249,7 @@ Begin {
     Catch {
         Write-Warning $_
         Send-MailHC -To $ScriptAdmin -Subject FAILURE -Priority High -Message $_ -Header $ScriptName
-        Write-EventLog @EventErrorParams -Message ($env:USERNAME + ' - ' + "FAILURE:`n`n- " + $_)
+        Write-EventLog @EventErrorParams -Message "FAILURE:`n`n- $_"
         Write-EventLog @EventEndParams; Exit 1
     }
 }
@@ -376,7 +376,7 @@ Process {
     Catch {
         Write-Warning $_
         Send-MailHC -To $ScriptAdmin -Subject FAILURE -Priority High -Message $_ -Header $ScriptName
-        Write-EventLog @EventErrorParams -Message ($env:USERNAME + ' - ' + "FAILURE:`n`n- " + $_)
+        Write-EventLog @EventErrorParams -Message "FAILURE:`n`n- $_"
         $Sessions | Remove-PSSession -EA Ignore
         Write-EventLog @EventEndParams; Exit 1
     }
@@ -582,7 +582,7 @@ End {
     Catch {
         Write-Warning $_
         Send-MailHC -To $ScriptAdmin -Subject "FAILURE" -Priority High -Message $_ -Header $ScriptName
-        Write-EventLog @EventErrorParams -Message ($env:USERNAME + ' - ' + "FAILURE:`n`n- " + $_); Exit 1
+        Write-EventLog @EventErrorParams -Message "FAILURE:`n`n- $_"; Exit 1
     }
     Finally {
         $Sessions | Remove-PSSession -EA Ignore
