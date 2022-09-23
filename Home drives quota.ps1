@@ -123,11 +123,11 @@
 [CmdLetBinding()]
 Param (
     [Parameter(Mandatory)]
-    [String]$ScriptName = 'Home drives quota (BNL)',
+    [String]$ScriptName,
     [Parameter(Mandatory)]
-    [String]$ADGroupName = 'BEL ATT Quota home',
+    [String]$ADGroupName,
     [Parameter(Mandatory)]
-    [String]$ADGroupRemoveName = 'BEL ATT Quota home REMOVE',
+    [String]$ADGroupRemoveName,
     [Parameter(Mandatory)]
     [String[]]$MailTo,
     [String]$ThresholdFile,
