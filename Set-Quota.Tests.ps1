@@ -2,6 +2,7 @@
 #Requires -Version 5.1
 
 BeforeAll {
+    $ScriptAdmin = 'testAdmin@contoso.com'
     $SourceTemplateName = 'TEST HOME Quota (10GB Soft)'
 
     Function Set-EqualToTemplateHC {
