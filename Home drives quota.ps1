@@ -133,7 +133,10 @@ Param (
     [String]$ThresholdFile,
     [String]$SetQuotaScriptFile = '.\Set-Quota.ps1',
     [String]$LogFolder = "$env:POWERSHELL_LOG_FOLDER\Home drives\Home drives quota\$ScriptName",
-    [String[]]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
+    [String[]]$ScriptAdmin = @(
+        $env:POWERSHELL_SCRIPT_ADMIN,
+        $env:POWERSHELL_SCRIPT_ADMIN_BACKUP
+    )
 )
 
 Begin {

@@ -3,7 +3,6 @@
 
 BeforeAll {
     Import-Module ActiveDirectory -Verbose:$false -Force
-    $ScriptAdmin = 'bob@contoso.com'
 
     $testADgroupNamePrefix = 'Group H drive quota'
     $testThresholdData = @(
@@ -93,10 +92,6 @@ IT Service Desk
         }
     )
 
-    $MailAdminParams = {
-        ($To -eq $ScriptAdmin) -and ($Priority -eq 'High') -and ($Subject -eq 'FAILURE')
-    }
-
     $testScript = $PSCommandPath.Replace('.Tests.ps1', '.ps1')
     $TestParams = @{
         ADGroupName        = $testADgroupNamePrefix
@@ -105,7 +100,13 @@ IT Service Desk
         LogFolder          = (New-Item 'TestDrive:\Log' -ItemType Directory).FullName
         ThresholdFile      = (New-Item 'TestDrive:\Thresholds.json' -ItemType File).FullName
         SetQuotaScriptFile = (New-Item 'TestDrive:\Script.ps1' -ItemType File).FullName
-        MailTo             = $ScriptAdmin
+        MailTo             = 'bob@contoso.com'
+        ScriptAdmin        = 'admin@contoso.com'
+    }
+
+    $MailAdminParams = {
+        ($To -eq $testParams.ScriptAdmin) -and ($Priority -eq 'High') -and 
+        ($Subject -eq 'FAILURE')
     }
 
     $testThresholdData | ConvertTo-Json | Out-File $testParams.ThresholdFile -Force
@@ -156,7 +157,7 @@ Describe 'send an error mail to tha admin when' {
         $Users | Should -BeNullOrEmpty
     } 
     Context 'a mandatory parameter is missing' {
-        It "<_>" -Foreach @(
+        It "<_>" -ForEach @(
             'ScriptName' ,
             'ADGroupName',
             'MailTo' ,
